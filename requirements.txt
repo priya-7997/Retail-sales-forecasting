@@ -1,0 +1,8 @@
+flask
+pandas
+numpy
+xgboost
+scikit-learn
+prophet
+statsmodels
+joblib
