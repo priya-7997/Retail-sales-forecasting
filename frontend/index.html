@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Retail Sales Forecasting Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="..\frontend\style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>🛍️ Indian Retail Sales Forecasting Dashboard</h1>
+            <p>Advanced Analytics for Multi-Store Retail Chain Operations</p>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-card">
+                <h3>📍 Store Location</h3>
+                <select id="storeSelect">
+                    <option value="all">All Stores</option>
+                    <option value="mumbai">Mumbai - Andheri</option>
+                    <option value="delhi">Delhi - Connaught Place</option>
+                    <option value="bangalore">Bangalore - Koramangala</option>
+                    <option value="chennai">Chennai - T.Nagar</option>
+                    <option value="hyderabad">Hyderabad - Hitech City</option>
+                    <option value="pune">Pune - FC Road</option>
+                    <option value="kolkata">Kolkata - Park Street</option>
+                    <option value="ahmedabad">Ahmedabad - SG Highway</option>
+                </select>
+            </div>
+
+            <div class="control-card">
+                <h3>🏷️ Product Category</h3>
+                <select id="categorySelect">
+                    <option value="all">All Categories</option>
+                    <option value="clothing">Clothing & Apparel</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="groceries">Groceries & FMCG</option>
+                    <option value="home">Home & Kitchen</option>
+                    <option value="beauty">Beauty & Personal Care</option>
+                    <option value="books">Books & Stationery</option>
+                    <option value="sports">Sports & Fitness</option>
+                </select>
+            </div>
+
+            <div class="control-card">
+                <h3>📅 Time Period</h3>
+                <select id="periodSelect">
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                    <option value="180">Last 6 Months</option>
+                    <option value="365">Last Year</option>
+                </select>
+            </div>
+
+            <div class="control-card">
+                <h3>🔮 Forecast Period</h3>
+                <select id="forecastSelect">
+                    <option value="7">Next 7 Days</option>
+                    <option value="14">Next 14 Days</option>
+                    <option value="30">Next 30 Days</option>
+                    <option value="90">Next 90 Days</option>
+                </select>
+            </div>
+
+            <div class="control-card">
+                <h3>🤖 Model Selection</h3>
+                <select id="modelSelect">
+                    <option value="all">All Models</option>
+                    <option value="xgboost">XGBoost</option>
+                    <option value="arima">ARIMA</option>
+                    <option value="prophet">Prophet</option>
+                </select>
+                <button class="update-btn" onclick="updateForecast()">Update Forecast</button>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value revenue" id="totalRevenue">₹12,45,678</div>
+                <div class="metric-label">Total Revenue</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value forecast" id="forecastRevenue">₹15,23,456</div>
+                <div class="metric-label">Forecast Revenue</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value growth" id="growthRate">+18.5%</div>
+                <div class="metric-label">Growth Rate</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value accuracy" id="modelAccuracy">94.2%</div>
+                <div class="metric-label">Model Accuracy</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 class="chart-title">📈 Sales Trend Analysis</h3>
+                <canvas id="salesTrendChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">🎯 Category Performance</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <div class="chart-container full-width-chart">
+                <h3 class="chart-title">
+                    🔮 Model Comparison: XGBoost vs ARIMA vs Prophet
+                    <span class="festival-indicator" id="festivalIndicator">🎉 Festival Season</span>
+                </h3>
+                <canvas id="forecastChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">📊 Store Performance</h3>
+                <canvas id="storeChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">🏆 Model Accuracy Comparison</h3>
+                <canvas id="accuracyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="insights-section">
+            <h3 class="insights-title">📊 AI-Powered Insights</h3>
+            <div class="insights-grid" id="insightsGrid">
+                <div class="insight-card">
+                    <h4>🎊 Festival Season Impact</h4>
+                    <p>Diwali and Dussehra are approaching. Historical data shows 35% increase in sales during these periods. Recommended stock levels: Electronics +40%, Clothing +25%.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>🌧️ Monsoon Trends</h4>
+                    <p>Monsoon season typically sees 15% dip in footfall but 20% increase in online orders. Consider boosting digital marketing campaigns.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>🏪 Store Performance</h4>
+                    <p>Mumbai Andheri store shows consistent growth. Delhi CP store underperforming - recommend promotional activities and inventory optimization.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>🤖 Model Performance</h4>
+                    <p>XGBoost shows 94.2% accuracy for current dataset. ARIMA performs better for short-term forecasts. Prophet excels at capturing seasonal patterns.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+            <p>Updating forecasts...</p>
+        </div>
+    </div>
+
+    <script src="..\frontend\script.js"></script>
+</body>
+</html>
